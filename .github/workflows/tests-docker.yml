@@ -1,0 +1,35 @@
+name: test docker deployment ⚙️
+
+on: [ push, pull_request ]
+
+jobs:
+  main:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - uses: actions/setup-python@v2
+      name: setup Python
+      with:
+        python-version: 3.8
+    - name: install requirements 📦
+      run: |
+        pip3 install -r requirements.txt
+        pip3 install -r requirements-dev.txt
+        python3 setup.py install
+    - name: run unit tests ⚙️
+      env:
+        WIS2BOX_AUTH_STORE: ./auth.db
+      run: |
+        pytest tests/unit
+    - name: run wis2box-auth ⚙️
+      env:
+        WIS2BOX_AUTH_STORE: ./auth.db
+      run: |
+        flask --app wis2box_auth.app run &
+    - name: run integration tests ⚙️
+      run: |
+        pytest tests/integration
+    - name: run flake8 ⚙️
+      run: |
+        find . -type f -name "*.py" | xargs flake8
