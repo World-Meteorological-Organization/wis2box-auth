@@ -35,25 +35,27 @@ TOKEN2 = '2_test_token'
 
 
 def test_no_auth():
-    """Test wis2box auth"""
+    '''Test wis2box without authentication'''
 
-    headers = {"X-Original-URI": f"/{TOPIC}", "Authorization": "Bearer"}
+    headers = {'X-Original-URI': f'/{TOPIC}', 'Authorization': 'Bearer'}
     r = requests.get(URL + '/authorize', headers=headers)
     assert r.status_code == 200
 
-    headers = {"X-Original-URI": f"/{TOPIC}?token={TOKEN}"}
+    headers = {'X-Original-URI': f'/{TOPIC}?token={TOKEN}'}
     r = requests.get(URL + '/authorize', headers=headers)
     assert r.status_code == 200
 
     headers = {
-        "X-Original-URI": f"/{TOPIC}",
-        "Authorization": f"Bearer {TOKEN}",
+        'X-Original-URI': f'/{TOPIC}',
+        'Authorization': f'Bearer {TOKEN}',
     }
     r = requests.get(URL + '/authorize', headers=headers)
     assert r.status_code == 200
 
 
 def test_add_auth():
+    '''Test adding wis2box authentication'''
+
     data = {'topic': TOPIC, 'token': TOKEN}
     r = requests.post(URL + '/add_token', data=data)
     assert r.status_code == 200
@@ -67,55 +69,59 @@ def test_add_auth():
     assert r.status_code == 200
 
 
-def test_bearer_auth():
+def test_header_auth():
+    '''Test wis2box header authentication'''
+
     headers = {
-        "X-Original-URI": f"/{TOPIC}",
-        "Authorization": "Bearer",
+        'X-Original-URI': f'/{TOPIC}',
+        'Authorization': 'Bearer',
     }
     r = requests.get(URL + '/authorize', headers=headers)
     assert r.status_code == 401
 
-    headers["X-Original-URI"] = f"/{TOPIC1}"
+    headers['X-Original-URI'] = f'/{TOPIC1}'
     r = requests.get(URL + '/authorize', headers=headers)
     assert r.status_code == 401
 
-    headers["X-Original-URI"] = f"/{TOPIC2}"
+    headers['X-Original-URI'] = f'/{TOPIC2}'
     r = requests.get(URL + '/authorize', headers=headers)
     assert r.status_code == 200
 
     headers = {
-        "X-Original-URI": f"/{TOPIC}",
-        "Authorization": f"Bearer {TOKEN}",
+        'X-Original-URI': f'/{TOPIC}',
+        'Authorization': f'Bearer {TOKEN}',
     }
     r = requests.get(URL + '/authorize', headers=headers)
     assert r.status_code == 200
 
-    headers["X-Original-URI"] = f"/{TOPIC1}"
+    headers['X-Original-URI'] = f'/{TOPIC1}'
     r = requests.get(URL + '/authorize', headers=headers)
     assert r.status_code == 401
 
-    headers["X-Original-URI"] = f"/{TOPIC2}"
+    headers['X-Original-URI'] = f'/{TOPIC2}'
     r = requests.get(URL + '/authorize', headers=headers)
     assert r.status_code == 200
 
 
 def test_token_auth():
+        '''Test wis2box token authentication'''
+
     headers = {
-        "X-Original-URI": f"/{TOPIC}",
-        "Authorization": "Bearer",
+        'X-Original-URI': f'/{TOPIC}',
+        'Authorization': 'Bearer',
     }
     r = requests.get(URL + '/authorize?token=', headers=headers)
     assert r.status_code == 401
 
-    headers["X-Original-URI"] = f"/{TOPIC2}"
+    headers['X-Original-URI'] = f'/{TOPIC2}'
     r = requests.get(URL + '/authorize', headers=headers)
     assert r.status_code == 200
 
-    headers = {"X-Original-URI": f"/{TOPIC}?token={TOKEN}"}
+    headers = {'X-Original-URI': f'/{TOPIC}?token={TOKEN}'}
     r = requests.get(URL + '/authorize', headers=headers)
     assert r.status_code == 200
 
-    headers = {"X-Original-URI": f"/{TOPIC1}?token={TOKEN1}"}
+    headers = {'X-Original-URI': f'/{TOPIC1}?token={TOKEN1}'}
     r = requests.get(URL + '/authorize', headers=headers)
     assert r.status_code == 200
 

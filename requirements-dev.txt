@@ -1,5 +1,4 @@
 flake8
-jinja2==3.0.3
 pytest
 requests
 twine

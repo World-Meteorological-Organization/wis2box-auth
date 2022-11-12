@@ -24,7 +24,7 @@ from wis2box_auth import (
     is_resource_open,
     create_token,
     delete_token,
-    extract_topic,
+    extract_topic
 )
 
 TOPIC = 'admin'
@@ -36,47 +36,52 @@ TOKEN2 = TOKEN + '2'
 
 
 def test_create_token():
+    '''Test creating token authentication'''
 
-    assert is_resource_open(TOPIC) is True
-    assert is_resource_open(TOPIC1) is True
-    assert is_resource_open(TOPIC2) is True
+    assert is_resource_open(TOPIC)
+    assert is_resource_open(TOPIC1)
+    assert is_resource_open(TOPIC2)
 
     create_token(TOPIC, TOKEN)
     create_token(TOPIC1, TOKEN1)
     create_token(TOPIC1, TOKEN2)
 
-    assert is_resource_open(TOPIC) is False
-    assert is_resource_open(TOPIC1) is False
-    assert is_resource_open(TOPIC2) is True
+    assert not is_resource_open(TOPIC)
+    assert not is_resource_open(TOPIC)
+    assert is_resource_open(TOPIC2)
 
-    assert is_token_authorized(TOPIC, TOKEN) is True
-    assert is_token_authorized(TOPIC, TOKEN1) is False
-    assert is_token_authorized(TOPIC, TOKEN2) is False
-    assert is_token_authorized(TOPIC1, TOKEN) is False
-    assert is_token_authorized(TOPIC1, TOKEN1) is True
-    assert is_token_authorized(TOPIC1, TOKEN2) is True
+    assert is_token_authorized(TOPIC, TOKEN)
+    assert not is_token_authorized(TOPIC, TOKEN1)
+    assert not is_token_authorized(TOPIC, TOKEN2)
+    assert not is_token_authorized(TOPIC1, TOKEN)
+    assert is_token_authorized(TOPIC1, TOKEN1)
+    assert is_token_authorized(TOPIC1, TOKEN2)
 
     delete_token(TOPIC)
     delete_token(TOPIC1)
 
 
 def test_delete_token():
+    '''Test deleting token authentication'''
+
     create_token(TOPIC, TOKEN)
     create_token(TOPIC1, TOKEN1)
     create_token(TOPIC1, TOKEN2)
 
     delete_token(TOPIC)
-    assert is_resource_open(TOPIC) is True
+    assert is_resource_open(TOPIC)
 
     delete_token(TOPIC1, TOKEN1)
-    assert is_token_authorized(TOPIC1, TOKEN1) is False
-    assert is_token_authorized(TOPIC1, TOKEN2) is True
+    assert not is_token_authorized(TOPIC1, TOKEN1)
+    assert is_token_authorized(TOPIC1, TOKEN2)
 
     delete_token(TOPIC1, TOKEN2)
-    assert is_token_authorized(TOPIC1, TOKEN2) is False
+    assert not is_token_authorized(TOPIC1, TOKEN2)
 
 
 def test_extract_token():
+    '''Test extracting token from store token'''
+
     create_token(TOPIC, TOKEN)
 
     topic = extract_topic(TOPIC1)

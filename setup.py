@@ -73,7 +73,7 @@ if (os.path.exists('MANIFEST')):
 
 
 setup(
-    name='wis2box_auth',
+    name='wis2box-auth',
     version=get_package_version(),
     description=DESCRIPTION.strip(),
     long_description=read('README.md'),
@@ -85,7 +85,7 @@ setup(
     author_email='tomkralidis@gmail.com',
     maintainer='Tom Kralidis',
     maintainer_email='tomkralidis@gmail.com',
-    url='https://github.com/wmo-im/wis2box',
+    url='https://github.com/wmo-im/wis2box-auth',
     install_requires=read('requirements.txt').splitlines(),
     packages=find_packages(),
     include_package_data=True,
@@ -102,9 +102,9 @@ setup(
         'Topic :: Scientific/Engineering :: Information Analysis'
     ],
     project_urls={
-        'Homepage': 'https://wmo-im.github.io/wis2box',
-        'Source Code': 'https://github.com/wmo-im/wis2box',
-        'Issue Tracker': 'https://github.com/wmo-im/wis2box/issues'
+        'Homepage': 'https://github.com/wmo-im/wis2box-auth',
+        'Source Code': 'https://github.com/wmo-im/wis2box-auth',
+        'Issue Tracker': 'https://github.com/wmo-im/wis2box-auth/issues'
     },
     cmdclass={'test': PyTest},
     test_suite='tests.run_tests'

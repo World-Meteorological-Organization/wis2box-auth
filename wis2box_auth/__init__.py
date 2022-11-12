@@ -102,19 +102,3 @@ def extract_topic(topic: str = None) -> bool:
     """
     auth_db = BaseAuth(AUTH_STORE)
     return auth_db.extract_topic(topic)
-
-
-# def extract_topic(uri: str) -> str:
-#     """
-#     Extract Topic Hierarchy from URI
-
-#     :param uri: `str` of requested URI
-
-#     :returns: `str` of API collection metadata
-#     """
-
-#     # TODO: Move away from regex matching for topic hierarchies.
-#     pattern = r'([a-z]{3}\.[_a-z]+\.(data|metadata|reports)\.(core|reccomended)\.[\w]+\.[\w-]+\.[\w]+)'  # noqa
-#     prog = re.compile(pattern)
-#     match = prog.search(uri)
-#     return match[0] if match else None
