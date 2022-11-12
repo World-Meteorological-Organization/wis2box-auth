@@ -104,7 +104,7 @@ def test_header_auth():
 
 
 def test_token_auth():
-        '''Test wis2box token authentication'''
+    '''Test wis2box token authentication'''
 
     headers = {
         'X-Original-URI': f'/{TOPIC}',
