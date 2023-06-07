@@ -43,7 +43,9 @@ def is_resource_open(topic: str) -> bool:
 
     :returns: `bool` of result
     """
+
     auth_db = BaseAuth(AUTH_STORE)
+
     return auth_db.is_resource_open(topic)
 
 
@@ -56,7 +58,9 @@ def is_token_authorized(topic: str, token: str) -> bool:
 
     :returns: `bool` of result
     """
+
     auth_db = BaseAuth(AUTH_STORE)
+
     return auth_db.is_token_authorized(token, topic)
 
 
@@ -69,7 +73,9 @@ def create_token(topic: str, token: str) -> bool:
 
     :returns: `bool` of result
     """
+
     auth_db = BaseAuth(AUTH_STORE)
+
     auth_db.add(token, topic)
     return auth_db.is_token_authorized(token, topic)
 
@@ -83,12 +89,14 @@ def delete_token(topic: str, token: str = '') -> bool:
 
     :returns: `bool` of result
     """
+
     auth_db = BaseAuth(AUTH_STORE)
+
     if not token:
-        # Delete all tokens for a given topic
+        LOGGER.debug(f'Deleting all tokens for topic {topic}')
         return auth_db.delete_by_topic_hierarchy(topic)
     else:
-        # Delete specific token
+        LOGGER.debug(f'Deleting token {token} for topic {topic}')
         return auth_db.delete_by_token(token, topic)
 
 
@@ -100,6 +108,13 @@ def extract_topic(topic: str = None) -> bool:
 
     :returns: `str` of result
     """
+
     auth_db = BaseAuth(AUTH_STORE)
-    sanitzed_topic = str(topic).replace('/', '.')
-    return auth_db.extract_topic(sanitzed_topic)
+
+    LOGGER.debug(f'topic {topic}')
+
+    sanitized_topic = topic.replace('/', '.')
+
+    LOGGER.debug(f'sanitized topic {sanitized_topic}')
+
+    return auth_db.extract_topic(sanitized_topic)
