@@ -101,4 +101,5 @@ def extract_topic(topic: str = None) -> bool:
     :returns: `str` of result
     """
     auth_db = BaseAuth(AUTH_STORE)
-    return auth_db.extract_topic(topic)
+    sanitzed_topic = str(topic).replace('/', '.')
+    return auth_db.extract_topic(sanitzed_topic)
