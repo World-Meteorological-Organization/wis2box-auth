@@ -113,7 +113,11 @@ def extract_topic(topic: str = None) -> bool:
 
     LOGGER.debug(f'topic {topic}')
 
-    sanitized_topic = topic.replace('/', '.')
+    if any([x in topic for x in ['processes', 'execution']]):
+        LOGGER.debug('topic is an API process execution')
+        sanitized_topic = topic
+    else:
+        sanitized_topic = topic.replace('/', '.')
 
     LOGGER.debug(f'sanitized topic {sanitized_topic}')
 
