@@ -61,7 +61,13 @@ def authorize():
     request_uri = request.headers.get('X-Original-URI')
     request_ = request.from_values(request_uri)
 
-    if request.headers.get('X-OGC-API-http-method', 'GET') == 'GET':
+    metadata_collections = [
+        'discovery-metadata',
+        'stations'
+    ]
+
+    if (request.headers.get('X-OGC-API-http-method', 'GET') == 'GET' and
+            any([x in request_uri for x in metadata_collections])):
         LOGGER.debug('API metadata request')
         msg = 'Resource is open'
         LOGGER.debug(msg)
