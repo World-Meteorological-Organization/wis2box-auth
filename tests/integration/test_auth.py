@@ -52,6 +52,20 @@ def test_no_auth():
     r = requests.get(URL + '/authorize', headers=headers)
     assert r.status_code == 200
 
+    headers = {
+        'X-Original-URI': f'/{TOPIC}?token={TOKEN}',
+        'X-api-http-method': 'GET'
+    }
+    r = requests.get(URL + '/authorize', headers=headers)
+    assert r.status_code == 200
+
+    headers = {
+        'X-Original-URI': f'/{TOPIC}?token={TOKEN}',
+        'X-api-http-method': 'POST'
+    }
+    r = requests.get(URL + '/authorize', headers=headers)
+    assert r.status_code == 401
+
 
 def test_add_auth():
     '''Test adding wis2box authentication'''
