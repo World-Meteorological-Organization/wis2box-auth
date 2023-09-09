@@ -29,7 +29,7 @@ COPY . /app
 # install wis2box_auth
 RUN cd /app \
     && pip3 install -r requirements.txt \
-    && python3 setup.py install
+    && pip3 install -e .
 
 COPY ./entrypoint.sh /entrypoint.sh
 
