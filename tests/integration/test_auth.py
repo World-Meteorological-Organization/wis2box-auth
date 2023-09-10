@@ -53,14 +53,14 @@ def test_no_auth():
     assert r.status_code == 200
 
     headers = {
-        'X-Original-URI': f'/oapi/collections/stations?token={TOKEN}',
+        'X-Original-URI': f'/oapi/collections/stations/items?token={TOKEN}',
         'X-api-http-method': 'GET'
     }
     r = requests.get(URL + '/authorize', headers=headers)
     assert r.status_code == 200
 
     headers = {
-        'X-Original-URI': f'/oapi/collections/stations?token={TOKEN}',
+        'X-Original-URI': f'/oapi/collections/stations/items?token={TOKEN}',
         'X-api-http-method': 'POST'
     }
     r = requests.get(URL + '/authorize', headers=headers)
