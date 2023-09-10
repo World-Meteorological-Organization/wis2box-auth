@@ -66,7 +66,7 @@ def authorize():
         'stations'
     ]
 
-    if (request.headers.get('X-api-http-method', 'GET') == 'GET' and
+    if (request.headers.get('X-Api-Http-Method', 'GET') == 'GET' and
             any([x in request_uri for x in metadata_collections])):
         LOGGER.debug('API metadata request')
         msg = 'Resource is open'

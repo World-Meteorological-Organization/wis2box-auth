@@ -116,6 +116,9 @@ def extract_topic(topic: str = None) -> bool:
     if any([x in topic for x in ['processes', 'execution']]):
         LOGGER.debug('topic is an API process execution')
         sanitized_topic = topic
+    elif any([x in topic for x in ['collections/stations', 'collections/discovery-metadata']]):  # noqa
+        LOGGER.debug('topic is an API metadata transaction')
+        sanitized_topic = topic
     else:
         sanitized_topic = topic.replace('/', '.')
 

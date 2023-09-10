@@ -29,9 +29,11 @@ URL = 'http://localhost:5000'
 TOPIC = 'admin'
 TOPIC1 = 'oapi'
 TOPIC2 = 'ui'
+TOPIC3 = 'collections/stations'
 TOKEN = 'test_token'
 TOKEN1 = 'token_1'
 TOKEN2 = '2_test_token'
+TOKEN3 = '3_test_token'
 
 
 def test_no_auth():
@@ -54,17 +56,10 @@ def test_no_auth():
 
     headers = {
         'X-Original-URI': f'/oapi/collections/stations/items?token={TOKEN}',
-        'X-api-http-method': 'GET'
+        'X-Api-Http-Method': 'GET'
     }
     r = requests.get(URL + '/authorize', headers=headers)
     assert r.status_code == 200
-
-    headers = {
-        'X-Original-URI': f'/oapi/collections/stations/items?token={TOKEN}',
-        'X-api-http-method': 'POST'
-    }
-    r = requests.get(URL + '/authorize', headers=headers)
-    assert r.status_code == 401
 
 
 def test_add_auth():
@@ -79,6 +74,10 @@ def test_add_auth():
     assert r.status_code == 200
 
     data = {'topic': TOPIC1, 'token': TOKEN2}
+    r = requests.post(URL + '/add_token', data=data)
+    assert r.status_code == 200
+
+    data = {'topic': TOPIC3, 'token': TOKEN3}
     r = requests.post(URL + '/add_token', data=data)
     assert r.status_code == 200
 
@@ -115,6 +114,28 @@ def test_header_auth():
     headers['X-Original-URI'] = f'/{TOPIC2}'
     r = requests.get(URL + '/authorize', headers=headers)
     assert r.status_code == 200
+
+    headers = {
+        'X-Original-URI': f'/{TOPIC3}',
+    }
+    r = requests.get(URL + '/authorize', headers=headers)
+    assert r.status_code == 200
+
+    headers = {
+        'X-Original-URI': f'/{TOPIC3}',
+        'Authorization': f'Bearer {TOKEN3}',
+        'X-Api-Http-Method': 'POST'
+    }
+    r = requests.get(URL + '/authorize', headers=headers)
+    assert r.status_code == 200
+
+    headers = {
+        'X-Original-URI': f'/{TOPIC3}',
+        'Authorization': f'Bearer {TOKEN1}',
+        'X-Api-Http-Method': 'POST'
+    }
+    r = requests.get(URL + '/authorize', headers=headers)
+    assert r.status_code == 401
 
 
 def test_token_auth():
