@@ -19,7 +19,8 @@
 #
 ###############################################################################
 
-from flask import Flask, request
+from flask import Flask, request, session
+from flask_oidc import OpenIDConnect
 import logging
 import os
 from typing import Tuple
@@ -36,11 +37,22 @@ from wis2box_auth.log import setup_logger
 LOGGER = logging.getLogger(__name__)
 app = Flask(__name__)
 
+app.config['OIDC_CLIENT_SECRETS'] = {
+    "web": {
+        "client_id": "wis2box",
+        "client_secret": os.environ['OIDC_CLIENT_SECRET'],
+        "issuer": os.environ['OIDC_ISSUER'],
+    }
+}
+oidc = OpenIDConnect(app, prefix='/oidc')
+
 LOGLEVEL = os.environ.get('WIS2BOX_LOGGING_LOGLEVEL', 'ERROR')
 LOGFILE = os.environ.get('WIS2BOX_LOGGING_LOGFILE', 'stdout')
 setup_logger(LOGLEVEL, LOGFILE)
-app.secret_key = os.urandom(32)
 
+# WIP FIXME: secret_key can no longer change randomly because it is needed for cookies (temporarily hardcoded)
+#app.secret_key = os.urandom(32)
+app.secret_key = b'j\x89\xeb\xfe\xd6\xfdj|\xf2\x94\x96\x9a\xca\n\xd5\xf2^\xc1\xb6\xa3d\x10D4\xcd\r\xfd\xa3\x90Q\x9f^'
 
 def get_response(code: int, description: str) -> Tuple[dict, int]:
     """
@@ -57,6 +69,14 @@ def get_response(code: int, description: str) -> Tuple[dict, int]:
 
 @app.route('/authorize')
 def authorize():
+    # WIP - Temporarily replacing token authorization with keycloak
+    # complete solution replaces `add_token` and `remove_token` with `add_group` and `remove_group`
+    if oidc.user_loggedin:
+        return get_response(200, 'Welcome %s' % session["oidc_auth_profile"].get('preferred_username'))
+    else:
+        return get_response(401, 'User is not authenticated with leycloak')
+
+    # WIP - the following code is currently not executed (see return statements above)
     api_key = None
     request_uri = request.headers.get('X-Original-URI')
     request_ = request.from_values(request_uri)
