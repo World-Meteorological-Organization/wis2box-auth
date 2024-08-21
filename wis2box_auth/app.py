@@ -62,6 +62,7 @@ def authorize():
     request_ = request.from_values(request_uri)
 
     metadata_collections = [
+        'data/metadata',
         'discovery-metadata',
         'stations'
     ]
