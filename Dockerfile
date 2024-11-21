@@ -26,12 +26,12 @@ LABEL maintainer="tomkralidis@gmail.com"
 # copy the app
 COPY . /app
 
-# update and install dependencies
-RUN apt-get update \
+RUN echo "deb http://security.debian.org/debian-security bullseye-security main" >> /etc/apt/sources.list \
+    && apt-get update \
     && apt-get install -y --no-install-recommends \
         python3-pip \
         bsdutils \
-        libc6 \
+        libc-bin \
     && pip3 install --upgrade pip setuptools wheel \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
