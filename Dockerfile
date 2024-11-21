@@ -19,20 +19,16 @@
 #
 ###############################################################################
 
-FROM python:3.9.13-slim
+FROM python:3.9.20-slim
 
 LABEL maintainer="tomkralidis@gmail.com"
 
 # copy the app
 COPY . /app
 
-RUN echo "deb http://security.debian.org/debian-security bullseye-security main" >> /etc/apt/sources.list \
-    && apt-get update \
-    && apt-get install -y --no-install-recommends \
-        python3-pip \
-        bsdutils \
-        libc-bin \
-    && pip3 install --upgrade pip setuptools wheel \
+# Update and upgrade all packages to their latest versions
+RUN apt-get update \
+    && apt-get upgrade -y --no-install-recommends \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
         
