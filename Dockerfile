@@ -32,7 +32,10 @@ RUN apt-get update \
     && apt-get upgrade python3-setuptools python3-pip -y --no-install-recommends \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
-        
+
+# Upgrade setuptools to a safe version
+RUN pip3 install --upgrade setuptools>=70.0.0
+    
 # install wis2box_auth
 RUN cd /app \
     && pip3 install -r requirements.txt \
