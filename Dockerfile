@@ -26,13 +26,13 @@ LABEL maintainer="tomkralidis@gmail.com"
 # copy the app
 COPY . /app
 
-# update base image
+# update and install dependencies
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
-        build-essential \
         python3-pip \
-        python3-setuptools \
-        python3-wheel
+    && pip3 install --upgrade pip setuptools wheel \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
         
 # install wis2box_auth
 RUN cd /app \
