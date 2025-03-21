@@ -102,9 +102,9 @@ setup(
         'Topic :: Scientific/Engineering :: Information Analysis'
     ],
     project_urls={
-        'Homepage': 'https://github.com/World-Meteorological-Organization/wis2box-auth',
-        'Source Code': 'https://github.com/World-Meteorological-Organization/wis2box-auth',
-        'Issue Tracker': 'https://github.com/World-Meteorological-Organization/wis2box-auth/issues'
+        'Homepage': 'https://github.com/World-Meteorological-Organization/wis2box-auth',  # noqa
+        'Source Code': 'https://github.com/World-Meteorological-Organization/wis2box-auth',  # noqa
+        'Issue Tracker': 'https://github.com/World-Meteorological-Organization/wis2box-auth/issues'  # noqa
     },
     cmdclass={'test': PyTest},
     test_suite='tests.run_tests'
