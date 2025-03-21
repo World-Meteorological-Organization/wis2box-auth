@@ -1,6 +1,6 @@
 # wis2box
 
-[![Tests](https://github.com/wmo-im/wis2box-auth/actions/workflows/tests-docker.yml/badge.svg?branch=auth)](https://github.com/wmo-im/wis2box-auth/actions/workflows/tests-docker.yml)
+[![Tests](https://github.com/World-Meteorological-Organization/wis2box-auth/actions/workflows/tests-docker.yml/badge.svg?branch=auth)](https://github.com/World-Meteorological-Organization/wis2box-auth/actions/workflows/tests-docker.yml)
 [![Docs](https://readthedocs.org/projects/wis2box/badge)](https://docs.wis2box.wis.wmo.int)
 
 ## Authentication for WIS 2.0 in a box
@@ -12,7 +12,7 @@ and running wis2box.
 
 ## Issues
 
-Please direct all issues to the [main wis2box issue tracker](https://github.com/wmo-im/wis2box/issues)
+Please direct all issues to the [main wis2box issue tracker](https://github.com/World-Meteorological-Organization/wis2box/issues)
 
 ## Contact
 
