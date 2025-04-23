@@ -110,9 +110,17 @@ class BaseAuth:
 
         :returns: Topic Hierarchy string
         """
+
+        matches = []
         for topic in self.topics():
             if topic in fuzzy_topic:
-                return topic
+                matches.append(topic)
+
+        if len(matches) == 1:
+            return matches[0]
+        elif len(matches) > 1:
+            # If there are multiple matches, return the longest one
+            return max(matches, key=len)
 
     def topics(self) -> Iterator[str]:
         """
