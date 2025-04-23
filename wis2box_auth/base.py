@@ -110,7 +110,7 @@ class BaseAuth:
 
         :returns: Topic Hierarchy string
         """
-        
+
         matches = []
         for topic in self.topics():
             if topic in fuzzy_topic:
