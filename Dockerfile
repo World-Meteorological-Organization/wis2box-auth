@@ -19,9 +19,10 @@
 #
 ###############################################################################
 
-FROM python:3.9.20-slim
+FROM python:3.12-slim
 
-LABEL maintainer="tomkralidis@gmail.com"
+# Set a non-root user
+RUN groupadd -r wis2box-auth && useradd -r -g wis2box-auth wis2box-auth
 
 # copy the app
 COPY . /app
@@ -40,6 +41,12 @@ RUN pip3 install --upgrade setuptools>=70.0.0
 RUN cd /app \
     && pip3 install -r requirements.txt \
     && pip3 install -e .
+
+# Change ownership of the app directory
+RUN chown -R wis2box-auth:wis2box-auth /app
+
+# Switch to non-root user
+USER wis2box-auth
 
 COPY ./entrypoint.sh /entrypoint.sh
 
