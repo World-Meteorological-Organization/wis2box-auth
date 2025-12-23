@@ -42,6 +42,10 @@ RUN cd /app \
     && pip3 install -r requirements.txt \
     && pip3 install -e .
 
+# ensure /data/wis2box exists and is owned by wis2box-auth user
+RUN mkdir -p /data/wis2box \
+    && chown -R wis2box-auth:wis2box-auth /data/wis2box
+
 # Change ownership of the app directory
 RUN chown -R wis2box-auth:wis2box-auth /app
 
