@@ -21,8 +21,11 @@
 
 FROM python:3.12-slim
 
-# Set a non-root user
-RUN groupadd -r wis2box-auth && useradd -r -g wis2box-auth wis2box-auth
+# Set a non-root user with a dedicated home directory
+RUN groupadd -r wis2box-auth \
+    && useradd -r -m -d /home/wis2box-auth -g wis2box-auth wis2box-auth
+
+ENV HOME=/home/wis2box-auth
 
 # copy the app
 COPY . /app
@@ -45,6 +48,10 @@ RUN cd /app \
 # ensure /data/wis2box exists and is owned by wis2box-auth user
 RUN mkdir -p /data/wis2box \
     && chown -R wis2box-auth:wis2box-auth /data/wis2box
+
+# Ensure the runtime home directory exists and is writable
+RUN mkdir -p /home/wis2box-auth \
+    && chown -R wis2box-auth:wis2box-auth /home/wis2box-auth
 
 # Change ownership of the app directory
 RUN chown -R wis2box-auth:wis2box-auth /app
