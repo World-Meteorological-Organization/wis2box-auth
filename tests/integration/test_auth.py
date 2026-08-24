@@ -31,10 +31,12 @@ TOPIC1 = 'oapi'
 TOPIC2 = 'ui'
 TOPIC3 = 'collections/stations'
 TOPIC4 = 'data/metadata/urn:wmo:md:cd-brazza_met_centre:surface-weather-observations.json'  # noqa
+TOPIC5 = '%63ollections/stations'
 TOKEN = 'test_token'
 TOKEN1 = 'token_1'
 TOKEN2 = '2_test_token'
 TOKEN3 = '3_test_token'
+
 
 
 def test_no_auth():
@@ -68,6 +70,13 @@ def test_no_auth():
     }
     r = requests.get(URL + '/authorize', headers=headers)
     assert r.status_code == 200
+
+    headers = {
+            'X-Original-URI': f'/{TOPIC5}',
+            'X-Api-Http-Method': 'GET'
+        }
+    r = requests.get(URL + '/authorize', headers=headers)
+    assert r.status_code == 401
 
 
 def test_add_auth():
