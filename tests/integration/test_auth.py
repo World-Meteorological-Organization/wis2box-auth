@@ -31,7 +31,6 @@ TOPIC1 = 'oapi'
 TOPIC2 = 'ui'
 TOPIC3 = 'collections/stations'
 TOPIC4 = 'data/metadata/urn:wmo:md:cd-brazza_met_centre:surface-weather-observations.json'  # noqa
-TOPIC5 = '%63ollections/stations'
 TOKEN = 'test_token'
 TOKEN1 = 'token_1'
 TOKEN2 = '2_test_token'
@@ -109,11 +108,16 @@ def test_header_auth():
     r = requests.get(URL + '/authorize', headers=headers)
     assert r.status_code == 200
 
+    data = {'topic': TOPIC3, 'token': TOKEN3}
+    r = requests.post(URL + '/add_token', data=data)
+    assert r.status_code == 200
+
     headers['X-Original-URI'] = f'/{TOPIC3}'
     r = requests.get(URL + '/authorize', headers=headers)
     assert r.status_code == 401
 
-    headers['X-Original-URI'] = f'/{TOPIC5}'
+    TOPIC3_ALT = TOPIC3.replace('collections', '%63ollections')
+    headers['X-Original-URI'] = f'/{TOPIC3_ALT}'
     r = requests.get(URL + '/authorize', headers=headers)
     assert r.status_code == 401
 
