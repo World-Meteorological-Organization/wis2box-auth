@@ -112,7 +112,11 @@ def test_header_auth():
     r = requests.post(URL + '/add_token', data=data)
     assert r.status_code == 200
 
-    headers['X-Original-URI'] = f'/{TOPIC3}'
+    headers = {
+            'X-Original-URI': f'/{TOPIC3}',
+            'Authorization': f'Bearer {TOKEN1}',
+            'X-Api-Http-Method': 'POST'
+    }   
     r = requests.get(URL + '/authorize', headers=headers)
     assert r.status_code == 401
 
