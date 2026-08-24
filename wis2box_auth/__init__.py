@@ -116,12 +116,11 @@ def extract_topic(topic: str = None) -> bool:
 
     # Canonicalize URL-encoded input first to avoid auth bypass with encoded
     # path segments.Decode repeatedly to collapse nested encodings
-    decoded_topic = topic
-    for _ in range(3):
-        next_decoded = unquote(decoded_topic)
-        if next_decoded == decoded_topic:
-            break
-        decoded_topic = next_decoded
+    decoded_topic = unquote(topic)
+
+    while '%' in decoded_topic:
+        LOGGER.debug(f'Quoted value: {decoded_topic}')
+        decoded_topic = unquote(decoded_topic)
 
     LOGGER.debug(f'original topic {topic} decoded to {decoded_topic}')
     topic = decoded_topic
