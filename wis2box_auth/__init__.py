@@ -24,6 +24,7 @@ __version__ = '1.0.0'
 import logging
 import os
 from pathlib import Path
+from urllib.parse import unquote
 
 from wis2box_auth.base import BaseAuth
 
@@ -111,7 +112,18 @@ def extract_topic(topic: str = None) -> bool:
 
     auth_db = BaseAuth(AUTH_STORE)
 
-    LOGGER.debug(f'topic {topic}')
+    LOGGER.debug(f'Topic {topic}')
+
+    # unquote URL encoded input
+
+    decoded_topic = unquote(topic)
+
+    while '%' in decoded_topic:
+        LOGGER.debug(f'Quoted value: {decoded_topic}')
+        decoded_topic = unquote(decoded_topic)
+
+    topic = decoded_topic
+    LOGGER.debug(f'Incoming topic {topic} decoded to {decoded_topic}')
 
     if any([x in topic for x in ['processes', 'execution']]):
         LOGGER.debug('topic is an API process execution')
