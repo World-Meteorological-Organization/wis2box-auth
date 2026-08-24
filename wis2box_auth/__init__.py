@@ -112,18 +112,18 @@ def extract_topic(topic: str = None) -> bool:
 
     auth_db = BaseAuth(AUTH_STORE)
 
-    LOGGER.debug(f'topic {topic}')
+    LOGGER.debug(f'Topic {topic}')
 
-    # Canonicalize URL-encoded input first to avoid auth bypass with encoded
-    # path segments.Decode repeatedly to collapse nested encodings
+    # unquote URL encoded input
+
     decoded_topic = unquote(topic)
 
     while '%' in decoded_topic:
         LOGGER.debug(f'Quoted value: {decoded_topic}')
         decoded_topic = unquote(decoded_topic)
 
-    LOGGER.debug(f'original topic {topic} decoded to {decoded_topic}')
     topic = decoded_topic
+    LOGGER.debug(f'Incoming topic {topic} decoded to {decoded_topic}')
 
     if any([x in topic for x in ['processes', 'execution']]):
         LOGGER.debug('topic is an API process execution')
