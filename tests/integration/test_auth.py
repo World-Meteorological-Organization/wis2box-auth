@@ -37,7 +37,6 @@ TOKEN2 = '2_test_token'
 TOKEN3 = '3_test_token'
 
 
-
 def test_no_auth():
     '''Test wis2box without authentication'''
 
@@ -69,6 +68,7 @@ def test_no_auth():
     }
     r = requests.get(URL + '/authorize', headers=headers)
     assert r.status_code == 200
+
 
 def test_add_auth():
     '''Test adding wis2box authentication'''
@@ -116,7 +116,7 @@ def test_header_auth():
             'X-Original-URI': f'/{TOPIC3}',
             'Authorization': f'Bearer {TOKEN1}',
             'X-Api-Http-Method': 'POST'
-    }   
+    }
     r = requests.get(URL + '/authorize', headers=headers)
     assert r.status_code == 401
 
