@@ -105,6 +105,7 @@ def test_header_auth():
     r = requests.get(URL + '/authorize', headers=headers)
     assert r.status_code == 401
 
+    headers['X-Original-URI'] = f'/{TOPIC2}'
     r = requests.get(URL + '/authorize', headers=headers)
     assert r.status_code == 200
 
