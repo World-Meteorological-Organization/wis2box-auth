@@ -22,11 +22,9 @@ jobs:
         WIS2BOX_AUTH_STORE: ./auth.db
       run: |
         pytest tests/unit
-    - name: run wis2box-auth ⚙️
-      env:
-        WIS2BOX_AUTH_STORE: ./auth.db
+    - name: run wis2box-auth as a docker service
       run: |
-        flask --app wis2box_auth.app run &
+        docker compose up -d --build -f tests/docker-compose.yml
     - name: run integration tests ⚙️
       run: |
         pytest tests/integration

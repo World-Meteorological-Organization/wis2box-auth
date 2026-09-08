@@ -1,0 +1,13 @@
+services:
+  wis2box-auth:
+    container_name: wis2box-auth-test
+    build: ../
+    environment:
+      - WIS2BOX_LOGGING_LOGLEVEL=INFO
+    volumes:
+      - auth-data:/data/wis2box:rw
+    ports:
+      - "5000:80"
+
+volumes:
+  auth-data:
