@@ -127,11 +127,26 @@ def extract_topic(topic: str = None) -> bool:
 
     # unquote URL encoded input
 
+    # initial decode pass
     decoded_topic = unquote(topic)
-
-    while '%' in decoded_topic:
+    # attempt up to 5 decoding passes to handle nested URL encoding
+    for _ in range(5):
+        if '%' not in decoded_topic:
+            break
         LOGGER.debug(f'Quoted value: {decoded_topic}')
+        previous_topic = decoded_topic
         decoded_topic = unquote(decoded_topic)
+        # If the decoded topic did not change from the previous pass, stop decoding
+        if decoded_topic == previous_topic:
+            break
+    else:
+        msg = (
+            f'Topic {topic!r} did not finish decoding within '
+            f'5 passes (stuck at {decoded_topic!r}); refusing rather '
+            f'than authorizing against a partially-decoded value'
+        )
+        LOGGER.error(msg)
+        raise ValueError(msg)
 
     topic = decoded_topic
     LOGGER.debug(f'Incoming topic {topic} decoded to {decoded_topic}')
