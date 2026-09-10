@@ -29,8 +29,8 @@ COPY . /app
 
 # Update and upgrade all packages to their latest versions
 RUN apt-get update \
-    && apt-get install python3-setuptools python3-pip -y --no-install-recommends \
-    && apt-get upgrade python3-setuptools python3-pip -y --no-install-recommends \
+    && apt-get install curl python3-setuptools python3-pip -y --no-install-recommends \
+    && apt-get upgrade curl python3-setuptools python3-pip -y --no-install-recommends \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 

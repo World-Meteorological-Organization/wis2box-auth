@@ -29,6 +29,7 @@ from wis2box_auth import (
     is_resource_open,
     create_token,
     delete_token,
+    topics,
     extract_topic
 )
 from wis2box_auth.log import setup_logger
@@ -53,6 +54,14 @@ def get_response(code: int, description: str) -> Tuple[dict, int]:
     """
 
     return {'code': code, 'description': description}, code
+
+
+@app.route('/status')
+def status():
+    """Container status endpoint with ACL topic count."""
+
+    topic_count = len(topics())
+    return f'{topic_count} topics in access-control list', 200
 
 
 @app.route('/authorize')
