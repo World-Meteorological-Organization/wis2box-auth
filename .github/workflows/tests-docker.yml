@@ -25,6 +25,12 @@ jobs:
     - name: run wis2box-auth as a docker service
       run: |
         docker compose -f tests/docker-compose.yml up -d --build
+    - name: sleep 1 second and check if the service is healthy
+      run: |
+        docker ps -a
+        sleep 1
+        docker ps -a
+        docker inspect --format='{{json .State.Health.Status}}' wis2box-auth-test | grep "healthy"
     - name: run integration tests ⚙️
       run: |
         pytest tests/integration
