@@ -22,11 +22,19 @@ jobs:
         WIS2BOX_AUTH_STORE: ./auth.db
       run: |
         pytest tests/unit
-    - name: run wis2box-auth ⚙️
-      env:
-        WIS2BOX_AUTH_STORE: ./auth.db
+    - name: run wis2box-auth as a docker service
       run: |
-        flask --app wis2box_auth.app run &
+        docker compose -f tests/docker-compose.yml up -d --build
+    - name: sleep 3 second and check if the service is healthy
+      run: |
+        docker ps -a
+        sleep 1
+        docker ps -a
+        sleep 2
+        docker ps -a
+        sleep 3
+        docker ps -a
+        docker inspect --format='{{json .State.Health.Status}}' wis2box-auth-test | grep "healthy"
     - name: run integration tests ⚙️
       run: |
         pytest tests/integration
