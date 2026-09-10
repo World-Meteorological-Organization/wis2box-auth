@@ -29,8 +29,8 @@ from wis2box_auth import (
     is_resource_open,
     create_token,
     delete_token,
-    topics,
-    extract_topic
+    extract_topic,
+    topics
 )
 from wis2box_auth.log import setup_logger
 
