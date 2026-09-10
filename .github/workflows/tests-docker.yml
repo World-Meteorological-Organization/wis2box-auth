@@ -24,7 +24,7 @@ jobs:
         pytest tests/unit
     - name: run wis2box-auth as a docker service
       run: |
-        docker compose up -d --build -f tests/docker-compose.yml
+        docker compose -f tests/docker-compose.yml up -d --build
     - name: run integration tests ⚙️
       run: |
         pytest tests/integration
