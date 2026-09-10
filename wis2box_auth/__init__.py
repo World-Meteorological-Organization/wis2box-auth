@@ -101,6 +101,17 @@ def delete_token(topic: str, token: str = '') -> bool:
         return auth_db.delete_by_token(token, topic)
 
 
+def topics() -> list[str]:
+    """
+    List all topics with access control configured
+
+    :returns: `list` of topic hierarchy strings
+    """
+
+    auth_db = BaseAuth(AUTH_STORE)
+    return list(auth_db.topics())
+
+
 def extract_topic(topic: str = None) -> bool:
     """
     Extrack token to from auth database

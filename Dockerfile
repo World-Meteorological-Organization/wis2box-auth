@@ -29,8 +29,8 @@ COPY . /app
 
 # Update and upgrade all packages to their latest versions
 RUN apt-get update \
-    && apt-get install python3-setuptools python3-pip -y --no-install-recommends \
-    && apt-get upgrade python3-setuptools python3-pip -y --no-install-recommends \
+    && apt-get install curl python3-setuptools python3-pip -y --no-install-recommends \
+    && apt-get upgrade curl python3-setuptools python3-pip -y --no-install-recommends \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
@@ -44,7 +44,8 @@ RUN cd /app \
 
 # ensure /data/wis2box exists and is owned by wis2box-auth user
 RUN mkdir -p /data/wis2box \
-    && chown -R wis2box-auth:wis2box-auth /data/wis2box
+    && chown -R wis2box-auth:wis2box-auth /data/wis2box \
+    && usermod -d /data/wis2box wis2box-auth
 
 # Change ownership of the app directory
 RUN chown -R wis2box-auth:wis2box-auth /app
