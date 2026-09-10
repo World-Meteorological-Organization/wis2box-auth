@@ -136,7 +136,8 @@ def extract_topic(topic: str = None) -> bool:
         LOGGER.debug(f'Quoted value: {decoded_topic}')
         previous_topic = decoded_topic
         decoded_topic = unquote(decoded_topic)
-        # If the decoded topic did not change from the previous pass, stop decoding
+        # If the decoded topic did not change from the previous
+        # pass, stop decoding
         if decoded_topic == previous_topic:
             break
     else:
