@@ -61,7 +61,7 @@ def status():
     """Container status endpoint with ACL topic count."""
 
     topic_count = len(topics())
-    return f'{topic_count} topics in access-control list', 200
+    return f'{topic_count} items in access-control list', 200
 
 
 @app.route('/authorize')
