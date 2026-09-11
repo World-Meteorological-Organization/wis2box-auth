@@ -17,3 +17,4 @@ Please direct all issues to the [main wis2box issue tracker](https://github.com/
 ## Contact
 
 * [Tom Kralidis](https://github.com/tomkralidis)
+* [Maaike Limper](https://github.com/maaikelimper)
