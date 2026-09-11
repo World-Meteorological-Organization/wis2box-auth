@@ -120,7 +120,10 @@ def extract_topic(topic: str = None) -> bool:
 
     while '%' in decoded_topic:
         LOGGER.debug(f'Quoted value: {decoded_topic}')
-        decoded_topic = unquote(decoded_topic)
+        next_decoded = unquote(decoded_topic)
+        if next_decoded == decoded_topic:
+            break
+        decoded_topic = next_decoded
 
     topic = decoded_topic
     LOGGER.debug(f'Incoming topic {topic} decoded to {decoded_topic}')
